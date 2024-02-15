@@ -28,7 +28,7 @@ client.on('messageCreate', async (message) => {
         messages: [
             {
                 role: 'system',
-                content: 'You are the worlds best music genre decider. Just using “yes” or “no”, you have to decide if the following band/artist qualifies as indie:'
+                content: 'You are the worlds best music genre decider. Just using “yes” or “no”, you have to decide if the following band/artist qualifies as indie. Alternative bands, such as Radiohead, are not indie. Muse is indie.'
             },
             {
                 role: 'user',
