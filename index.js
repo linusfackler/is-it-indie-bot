@@ -11,7 +11,7 @@ client.on('ready', () => {
 })
 
 const CHANNELS = ['1207477005902418022'];
-const IGNORE_PREFIX = "!";
+const IGNORE_PREFIX = ['!', '.', ','];
 
 const openai = new OpenAI({
     apiKey: process.env.OPENAI_KEY,
@@ -20,7 +20,7 @@ const openai = new OpenAI({
 
 client.on('messageCreate', async (message) => {
     if (message.author.bot) return;
-    if (message.content.startsWith(IGNORE_PREFIX)) return;
+    if (IGNORE_PREFIX.some(prefix => message.content.startsWith(prefix))) return;
     if (!CHANNELS.includes(message.channelId)) return;
 
     const response = await openai.chat.completions.create({
@@ -28,7 +28,7 @@ client.on('messageCreate', async (message) => {
         messages: [
             {
                 role: 'system',
-                content: 'You are the worlds best music genre decider. Just using “yes” or “no”, you have to decide if the following band/artist qualifies as indie. Alternative bands, such as Radiohead, are not indie. Muse is indie.'
+                content: 'You are the worlds best music genre decider. Just using “yes” or “no”, you have to decide if the following band/artist qualifies as indie. Alternative bands, such as Radiohead, are not indie. If you don\'t recognize the band, say "I don\'t recognize this band/artist."'
             },
             {
                 role: 'user',
